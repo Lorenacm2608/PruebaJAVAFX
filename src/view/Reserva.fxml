@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="pnReserva" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ReservaController">
+   <children>
+      <Label fx:id="lblReservas" alignment="CENTER" layoutX="11.0" layoutY="44.0" prefHeight="48.0" prefWidth="783.0" text="FlyShoes Reserva">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tbReservas" layoutX="14.0" layoutY="134.0" prefHeight="350.0" prefWidth="655.0">
+        <columns>
+          <TableColumn prefWidth="110.0" text="id_cliente" />
+          <TableColumn prefWidth="110.0" text="id_producto" />
+            <TableColumn prefWidth="110.0" text="cantidad" />
+            <TableColumn prefWidth="110.0" text="descripción" />
+            <TableColumn prefWidth="110.0" text="estado" />
+            <TableColumn prefWidth="110.0" text="fecha" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnVolver" layoutX="700.0" layoutY="450.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="75.0" text="Volver" />
+   </children>
+</Pane>
