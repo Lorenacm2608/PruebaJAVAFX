@@ -20,33 +20,47 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Proveedor implements Serializable {
 
     private static final long serialVersionUID = 1L;
-   
+
     //id del proveedor
     private Long idProveedor;
-  
+
     private String nombre;
     //tipo de proveedor 
-   
+
     private TipoProducto tipo;
     //empresa a la que pertenece el proveedor
-   
+
     private String empresa;
     //correo del proveedor
-  
+
     private String email;
     //telefono del proveedor
-   
+
     private String telefono;
     //descripcion del proveedor
     private String descripcion;
 
     //administrador encargado del proveedor
-  
     private Administrador administrador;
-    
+
     //lista de productos ofrecidos por el proveedor
-   
     private Set<Producto> productos;
+
+    public Proveedor(Long idProveedor, String nombre, TipoProducto tipo, String empresa, String email, String telefono, String descripcion, Administrador administrador, Set<Producto> productos) {
+        this.idProveedor = idProveedor;
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.empresa = empresa;
+        this.email = email;
+        this.telefono = telefono;
+        this.descripcion = descripcion;
+        this.administrador = administrador;
+        this.productos = productos;
+    }
+
+    public Proveedor() {
+       
+    }
 
     /**
      * Retorna el administrador encargado

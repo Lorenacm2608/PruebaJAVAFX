@@ -9,7 +9,6 @@ package modelo;
 import java.io.Serializable;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Clase Administrador que hereda de Usuario, esta clase será la encargada de la
@@ -23,11 +22,19 @@ public class Administrador extends Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     //Lista de Proveedores gestionados
-    
+
     private Set<Proveedor> proveedores;
-    
-    
+
     private Set<Vendedor> vendedores;
+
+    public Administrador(Set<Proveedor> proveedores, Set<Vendedor> vendedores) {
+        this.proveedores = proveedores;
+        this.vendedores = vendedores;
+    }
+
+    public Administrador() {
+
+    }
 
     /**
      * Devuelve la lista de vendedores gestionados
