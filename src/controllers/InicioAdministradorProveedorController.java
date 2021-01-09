@@ -4,11 +4,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -92,7 +91,7 @@ public class InicioAdministradorProveedorController {
     @FXML
     private TableColumn<Proveedor, Administrador> tcAdmin;
 
-    private List<Proveedor> proveedores = new ArrayList<>();
+    private final List<Proveedor> proveedores = new ArrayList<>();
 
     /**
      * Recibe el escenario
@@ -131,6 +130,8 @@ public class InicioAdministradorProveedorController {
         stage.setOnCloseRequest(this::handleWindowClose);
         stage.setOnShowing(this::handleWindowShowing);
         btnAltaProveedor.setOnAction(this::btnAltaProveedorClick);
+        btnBorrarProveedor.setOnAction(this::borrarProveedor);
+        btnActualizarProveedor.setOnAction(this::actualizarProveedor);
         stage.show();
 
     }
@@ -164,8 +165,8 @@ public class InicioAdministradorProveedorController {
      */
     private void handleWindowShowing(WindowEvent event) {
         LOG.log(Level.INFO, "Beginning InicioAdministradorProveedorController::handleWindowShowing");
-        btnActualizarProveedor.setDisable(true);
-        btnBorrarProveedor.setDisable(true);
+        //btnActualizarProveedor.setDisable(true);
+        //btnBorrarProveedor.setDisable(true);
 
     }
 
@@ -194,18 +195,9 @@ public class InicioAdministradorProveedorController {
     }
 
     private void btnBorrarProveedorClick(ActionEvent event) {
-        // Proveedor p = seleccionarProveedor();
 
     }
-    /*
-    private Proveedor seleccionarProveedor() {
-        Proveedor proveedorSeleccionado = tbProveedor.getSelectionModel().getSelectedItem();
-        if(proveedorSeleccionado){
-            btnBorrarProveedor.setDisable(false);
-        }
-        return proveedorSeleccionado;
-    }
-     */
+
     private List<Proveedor> getProveedores() {
         Proveedor proveedor;
         Administrador administrador;
@@ -378,6 +370,15 @@ public class InicioAdministradorProveedorController {
         proveedores.forEach((p) -> {
             tbProveedor.getItems().add(p);
         });
+    }
+
+    private void borrarProveedor(ActionEvent event) {
+        LOG.log(Level.INFO, "Se ha borrado un proveedor");
+        tbProveedor.getItems().removeAll(tbProveedor.getSelectionModel().getSelectedItem());
+    }
+
+    private void actualizarProveedor(ActionEvent event) {
+        
     }
 
 }
