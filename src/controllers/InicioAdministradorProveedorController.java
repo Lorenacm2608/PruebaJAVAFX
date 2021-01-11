@@ -2,7 +2,9 @@ package controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 import java.util.Optional;
@@ -89,7 +91,7 @@ public class InicioAdministradorProveedorController {
     @FXML
     private TableColumn<Proveedor, String> tcDescripcion;
     @FXML
-    private TableColumn<Proveedor, Administrador> tcAdmin;
+    private TableColumn<Administrador, Long> tcAdmin;
 
     private final List<Proveedor> proveedores = new ArrayList<>();
 
@@ -206,9 +208,7 @@ public class InicioAdministradorProveedorController {
             administrador = new Administrador();
             //Administrador
             administrador.setId_usuario(Long.valueOf(i));
-            administrador.setDireccion("Calle monteIkea");
-            administrador.setEmail("admin@gmail.com");
-
+            //administrador.setId_usuario(Long.valueOf(1));
             //Proveedor
             proveedor.setIdProveedor(Long.valueOf(i));
             proveedor.setNombre("Lucas");
@@ -218,69 +218,11 @@ public class InicioAdministradorProveedorController {
             proveedor.setTelefono("927500299");
             proveedor.setDescripcion("Producto muy recomendado");
             proveedor.setAdministrador(administrador);
-
+            //proveedor.setAdministrador(administrador.setId_usuario(Long.valueOf(i)));
             proveedores.add(proveedor);
         }
 
         return proveedores;
-    }
-
-    private void opcionesMenu() {
-        /* //Barra de menú
-        menuBar = new MenuBar();
-        //Opción del menú -- Perfil
-        menuPerfil = new Menu();
-        //Opción del menú -- Vendedor
-        menuVendedor = new Menu();
-        //Añadimos el menuItem Administrador a la opción de menú de Perfil
-        menuAdministrador = new MenuItem("Administrador");
-        //Opción del menú -- Salir
-        menuSalir = new MenuItem("Salir");
-        //Opción de menú -- Lista de vendedores
-        menuVendedores = new MenuItem("Lista de vendedores");
-        //Añadimos a la barra de menú las opciones creadas
-        menuBar.getMenus().addAll(menuPerfil, menuVendedor);
-        //Añadimos al de menú Perfil las opciones de submenú creadas
-        menuPerfil.getItems().addAll(menuAdministrador, menuSalir);
-        //Añadimos al de menú Vendedor las opciones de submenú creadas
-        menuVendedor.getItems().add(menuVendedores);
-        return menuBar;*/
-        LOG.log(Level.INFO, "MENU");
-        //Scene scene = new Scene(new VBox(), 400, 350);
-
-        menuBar = new MenuBar();
-
-        menuPerfil = new Menu("Perfil");
-        //Opción del menú -- Vendedor
-        menuVendedor = new Menu("Vendedor");
-        //Añadimos el menuItem Administrador a la opción de menú de Perfil
-        menuAdministrador = new MenuItem("Administrador");
-        //ActionEvent de menuAdministrador
-        menuAdministrador.setOnAction((ActionEvent t) -> {
-            LOG.log(Level.INFO, "MENU ADMINISTRADOR");
-        });
-        //Opción del menú -- Salir
-        menuSalir = new MenuItem("Salir");
-        //ActionEvent de menuSalir
-        menuSalir.setOnAction((ActionEvent t) -> {
-            LOG.log(Level.INFO, "MENU SALIR");
-        });
-        //Opción de menú -- Lista de vendedores
-        menuVendedores = new MenuItem("Lista de vendedores");
-        //ActionEvent de menuVendedores
-        menuVendedores.setOnAction((ActionEvent t) -> {
-            LOG.log(Level.INFO, "MENU VENDEDORES");
-        });
-        //Añadimos a la barra de menú las opciones creadas
-        menuBar.getMenus().addAll(menuPerfil, menuVendedor);
-        //Añadimos al de menú Perfil las opciones de submenú creadas
-        menuPerfil.getItems().addAll(menuAdministrador, menuSalir);
-        //Añadimos al de menú Vendedor las opciones de submenú creadas
-        menuVendedor.getItems().add(menuVendedores);
-
-        //((VBox) scene.getRoot()).getChildren().addAll(menuBar);
-        //stage.setScene(scene);
-        //stage.show();
     }
 
     /**
@@ -364,7 +306,7 @@ public class InicioAdministradorProveedorController {
 
         });
         //Administrador asociado con el proveedor 
-        tcAdmin.setCellValueFactory(new PropertyValueFactory<>("administrador"));
+        tcAdmin.setCellValueFactory(new PropertyValueFactory<>("id_usuario"));
 
         //Añadimos las celdas dentro de la tabla de Proveedores (tbProveedor)
         proveedores.forEach((p) -> {
@@ -378,7 +320,65 @@ public class InicioAdministradorProveedorController {
     }
 
     private void actualizarProveedor(ActionEvent event) {
-        
+        LOG.log(Level.INFO, "Confirmación de guardado de cambios");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Administrador");
+        alert.setContentText("¿Estas seguro de guardar los cambios?");
+        Optional<ButtonType> respuesta = alert.showAndWait();
+
+        if (respuesta.get() == ButtonType.OK) {
+            LOG.log(Level.INFO, "Has pulsado el boton Aceptar");
+            event.consume();
+        } else {
+            LOG.log(Level.INFO, "Has pulsado el boton Cancelar");
+            event.consume();
+        }
+    }
+
+    @FXML
+    private void configMenuAdministrador(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Información del Administrador");
+        alert.setHeaderText("Usuario: Administrador");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("hh: mm dd-MMM-aaaa");
+        String fechaComoCadena = sdf.format(new Date());
+        alert.setContentText(fechaComoCadena);
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void configMenuSalir(ActionEvent event) {
+        LOG.log(Level.INFO, "Ventana Login");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LogIn.fxml"));
+
+            Parent root = (Parent) loader.load();
+
+            LogInController controller = ((LogInController) loader.getController());
+            controller.initStage(root);
+            stage.hide();
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, "Se ha producido un error de E/S");
+        }
+    }
+
+    @FXML
+    private void configMenuVendedores(ActionEvent event) {
+        LOG.log(Level.INFO, "Ventana Inicio de Administrador (Vendedor)");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/InicioAdministrador_vendedor.fxml"));
+
+            Parent root = (Parent) loader.load();
+
+            InicioAdministradorVendedorController controller = ((InicioAdministradorVendedorController) loader.getController());
+            controller.initStage(root);
+            stage.hide();
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, "Se ha producido un error de E/S");
+        }
     }
 
 }

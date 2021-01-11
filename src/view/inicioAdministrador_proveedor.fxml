@@ -57,13 +57,13 @@
               <menus>
                 <Menu fx:id="menuPerfil" mnemonicParsing="false" text="Perfil">
                   <items>
-                    <MenuItem fx:id="menuAdministrador" mnemonicParsing="false" text="Administrador" />
-                        <MenuItem fx:id="menuSalir" mnemonicParsing="false" text="Salir" />
+                    <MenuItem fx:id="menuAdministrador" mnemonicParsing="false" onAction="#configMenuAdministrador" text="Administrador" />
+                        <MenuItem fx:id="menuSalir" mnemonicParsing="false" onAction="#configMenuSalir" text="Salir" />
                   </items>
                 </Menu>
                   <Menu fx:id="menuVendedor" mnemonicParsing="false" text="Vendedor">
                      <items>
-                        <MenuItem fx:id="menuVendedores" mnemonicParsing="false" text="Lista de vendedores" />
+                        <MenuItem fx:id="menuVendedores" mnemonicParsing="false" onAction="#configMenuVendedores" text="Lista de vendedores" />
                      </items>
                   </Menu>
               </menus>
